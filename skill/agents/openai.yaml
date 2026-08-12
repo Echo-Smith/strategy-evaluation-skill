@@ -1,0 +1,4 @@
+interface:
+  display_name: "Strategy Evaluation"
+  short_description: "Run blind strategy evaluations and regression gates"
+  default_prompt: "Use $strategy-evaluation to run the strategy evaluation workflow and produce the required review artifacts."
