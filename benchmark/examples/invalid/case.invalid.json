@@ -1,0 +1,18 @@
+{
+  "schemaVersion": "wabench.v1",
+  "caseId": "bad",
+  "suiteId": "wabench.public.demo",
+  "taskType": "chat",
+  "difficulty": "L4",
+  "input": "invalid fixture",
+  "context": {},
+  "sourceMode": "none",
+  "sourceFixtureRefs": [],
+  "expectedBehavior": "guess",
+  "mustHave": [],
+  "mustNotHave": [],
+  "hardGateIds": [],
+  "capabilityTags": [],
+  "riskTags": [],
+  "privacyLevel": "public"
+}

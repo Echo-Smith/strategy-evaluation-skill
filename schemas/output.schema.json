@@ -1,0 +1,82 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/Echo-Smith/writing-agent-benchmark/main/schemas/output.schema.json",
+  "title": "WABench normalized output",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schemaVersion", "outputId", "runId", "caseId", "status", "outputHash", "textStorage", "checks", "failures", "metrics", "routing", "createdAt"],
+  "properties": {
+    "schemaVersion": {"const": "wabench.v1"},
+    "outputId": {"type": "string", "pattern": "^[a-z][a-z0-9_-]{2,120}$"},
+    "runId": {"type": "string", "pattern": "^[a-z][a-z0-9_-]{2,120}$"},
+    "caseId": {"type": "string", "pattern": "^[a-z][a-z0-9_-]{2,120}$"},
+    "status": {"enum": ["complete", "partial", "generation_failed", "tool_failed", "capture_missing"]},
+    "outputHash": {"type": "string", "pattern": "^sha256:[a-f0-9]{64}$"},
+    "textStorage": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["mode"],
+      "properties": {
+        "mode": {"enum": ["inline_public", "private_ref", "hash_only"]},
+        "text": {"type": "string", "maxLength": 50000},
+        "privateRef": {"type": "string", "maxLength": 500}
+      }
+    },
+    "checks": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["checkId", "status", "severity", "evidence"],
+        "properties": {
+          "checkId": {"type": "string", "pattern": "^[a-z][a-z0-9_]*\\.[a-z][a-z0-9_]*$"},
+          "status": {"enum": ["pass", "fail", "unknown", "not_applicable"]},
+          "severity": {"enum": ["info", "low", "medium", "high", "critical"]},
+          "evidence": {"type": "object"}
+        }
+      }
+    },
+    "failures": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["stage", "type", "code", "hardFailure", "retryable", "userVisible"],
+        "properties": {
+          "stage": {"enum": ["input", "retrieval", "tool", "generation", "judge", "stream", "storage", "unknown"]},
+          "type": {"type": "string", "pattern": "^[a-z][a-z0-9_]*$"},
+          "code": {"type": "string", "pattern": "^[A-Z][A-Z0-9_]*$"},
+          "hardFailure": {"type": "boolean"},
+          "retryable": {"type": "boolean"},
+          "userVisible": {"type": "boolean"}
+        }
+      }
+    },
+    "metrics": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["latencyMs", "toolFailureCount", "costStatus"],
+      "properties": {
+        "latencyMs": {"type": ["integer", "null"], "minimum": 0},
+        "inputTokens": {"type": ["integer", "null"], "minimum": 0},
+        "outputTokens": {"type": ["integer", "null"], "minimum": 0},
+        "toolFailureCount": {"type": "integer", "minimum": 0},
+        "costStatus": {"enum": ["observed", "estimated", "unavailable"]},
+        "cost": {"type": ["number", "null"], "minimum": 0},
+        "currency": {"type": ["string", "null"], "maxLength": 8}
+      }
+    },
+    "routing": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["knowledgeOnly", "webSearchTriggered"],
+      "properties": {
+        "knowledgeProvider": {"type": ["string", "null"], "maxLength": 80},
+        "knowledgeOnly": {"type": "boolean"},
+        "webSearchTriggered": {"type": "boolean"}
+      }
+    },
+    "traceRef": {"type": ["string", "null"], "maxLength": 200},
+    "createdAt": {"type": "string", "format": "date-time"}
+  }
+}

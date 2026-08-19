@@ -1,42 +1,72 @@
-# Strategy Evaluation Skill
+# WritingAgentBench
 
-一个面向写作助手的可复策略评测工具包，帮助团队比较 Prompt、Memory、检索、工具和交互策略，并通过盲评、真实用户接受、Holdout 和回归门禁决定是否上线。
+WritingAgentBench 是面向写作 Agent 的可复现评测基准。它把“模型写得像不像”扩展为一条完整证据链：任务与来源约束、工具轨迹、五项 Rubric、硬失败、人工接受、修改负担、延迟、成本可用性和发布门禁。
 
-## 内容
+> 公开核心用于复现和比较；企业私有集用于真实业务决策。两者使用同一协议，但绝不混用数据。
 
-- `skill/SKILL.md`：可供 Codex/Agent 使用的 Strategy Evaluation Skill。
-- `skill/agents/openai.yaml`：Skill 的界面元数据。
-- `docs/strategy-evaluation-sop.md`：中文评测 SOP。
-- `docs/strategy-evaluation-sop.en.md`：英文评测 SOP。
-- `README.en.md`：English overview.
+[English](./README.en.md) · [公开核心集](./benchmark/public-core/DATASET_CARD.md) · [方法说明](./docs/methodology.md) · [私有扩展](./docs/private-extension.md) · [Skill](./skill/writing-agent-benchmark/SKILL.md)
 
-## 核心流程
+## 产品经理案例：Luminbuddy 如何让评测影响上线
 
-定义数据契约 → 固定 Rubric 与 Badcase → 运行成对策略实验 → 生成中文 Excel 盲评 → 导入真实用户接受数据 → 冻结候选 → Holdout → 上线或回滚。
+Luminbuddy（笔润智谈）最初面对两个策略问题：是否强制来源证据闸门，以及是否默认注入个人风格记忆。团队没有只比较平均分，而是冻结同批样本，进行盲评、Holdout、真实用户接受代理和失败归因。
 
-## 适用场景
+| 决策 | 关键证据 | 产品动作 |
+| --- | --- | --- |
+| 来源证据闸门 | Holdout 通过率 75% → 100%，硬失败率 18.8% → 0%，接受率 75% → 100% | 默认开启，并保留回滚开关 |
+| 个人风格 Memory | 通过率 93.8% → 87.5%，接受率同步下降，新增 2 个硬失败 | 默认关闭，仅显式 opt-in |
+| Lexiang-only 路由 | 24/24 命中乐享且 `knowledgeOnly=true`，全网搜索误触发为 0 | 固化来源路由回归与线上观测 |
 
-- Prompt 或 Memory 策略前后对比
-- 检索和来源证据闸门评估
-- 一次生成与研究—写作—审校流程比较
-- 写作助手的选题、写作、润色、查重和异常输入评测
-- 乐享/IMA 知识库来源路由回归
+这个案例体现的不是某个模型“更聪明”，而是产品决策可以由可审计证据推动：
 
-## 重要原则
+```text
+问题定义 → 冻结候选 → 同批运行 → 盲评/仲裁 → Badcase 根因
+       → Holdout → 线上指标 → 发布门禁 → 回归资产
+```
 
-- 开发集用于筛选，Holdout 用于验证泛化。
-- 每次只改变一个策略变量。
-- 评测者接受和真实用户接受分开记录。
-- 硬失败不能被平均分抵消。
-- 不伪造缺失的评测或用户数据。
-- 公开报告不得包含私有知识库正文、凭证、Prompt 或模型配置。
+公开仓库只保留聚合结果和脱敏方法；企业知识库原文、真实 Trace、内部 Prompt 和私有 Holdout 均留在 Luminbuddy 私有命名空间。
 
-## 使用 Skill
+## Benchmark 亮点
 
-将 `skill/` 目录安装到你的 Agent Skill 目录，然后使用 `$strategy-evaluation` 触发。
+- **写作任务原生**：覆盖选题、写作、润色、查重和异常输入，而不是把通用聊天题改名为写作题。
+- **质量与可靠性分离**：五项 1—5 分 Rubric 衡量质量；路由、长度、工具、隐私等作为确定性 checks，不与主观分数混算。
+- **硬失败优先**：编造关键事实、改变原意、来源冲突隐瞒、隐私泄露和缺失澄清不能被平均分抵消。
+- **Human-in-the-loop**：记录评审人、角色、方式、时间、标签来源和仲裁，支持中文 Excel 协作。
+- **公开核心 + 私有企业集**：公开集可复现；私有 Holdout 验证真实业务，协议一致但数据隔离。
+- **从评测到发布**：同时报告通过率、修改负担、接受、延迟、成本可用性、工具失败和回滚条件。
 
-详细流程见 [中文 SOP](docs/strategy-evaluation-sop.md) 和 [English SOP](docs/strategy-evaluation-sop.en.md)。
+## 快速开始
+
+```bash
+npm test
+npm run validate
+npm run privacy:scan
+node scripts/summarize.mjs benchmark/examples/reviews.valid.json
+```
+
+校验器不依赖云服务或模型凭证。接入真实产品时，通过 Adapter 实现：
+
+```text
+prepare(case, candidate) -> productRequest
+execute(productRequest) -> rawTrace
+normalize(rawTrace) -> WABench output
+collectOutcome(traceId) -> WABench outcome[]
+```
+
+## 目录
+
+```text
+benchmark/   72 条公开核心集、Rubric、根因分类和脱敏示例
+schemas/     WABench Schema v1
+scripts/     校验、汇总和隐私扫描 CLI
+skill/       可安装的 writing-agent-benchmark Skill
+docs/        中英文方法与私有扩展说明
+tests/       契约、评分和隐私测试
+```
+
+## 当前范围
+
+本版本包含 72 条公开核心集、20 条合成来源 fixture、协议、Rubric、根因、CLI 和 Skill。Luminbuddy 私有套件只公开接口和聚合口径，原始数据不进入本仓库。
 
 ## License
 
-MIT
+[MIT](./LICENSE)

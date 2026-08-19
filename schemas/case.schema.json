@@ -1,0 +1,41 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/Echo-Smith/writing-agent-benchmark/main/schemas/case.schema.json",
+  "title": "WABench case",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schemaVersion", "caseId", "suiteId", "taskType", "difficulty", "input", "context", "sourceMode", "sourceFixtureRefs", "expectedBehavior", "mustHave", "mustNotHave", "hardGateIds", "capabilityTags", "riskTags", "privacyLevel"],
+  "properties": {
+    "schemaVersion": {"const": "wabench.v1"},
+    "caseId": {"type": "string", "pattern": "^[a-z][a-z0-9_-]{2,120}$"},
+    "suiteId": {"type": "string", "pattern": "^[a-z][a-z0-9.-]{2,120}$"},
+    "taskType": {"enum": ["topic", "writing", "polish", "dedupe", "abnormal"]},
+    "difficulty": {"enum": ["L1", "L2", "L3"]},
+    "input": {"type": "string", "maxLength": 50000},
+    "context": {"type": "object"},
+    "sourceMode": {"enum": ["none", "frozen", "live"]},
+    "sourceFixtureRefs": {"type": "array", "uniqueItems": true, "items": {"type": "string", "pattern": "^[a-z][a-z0-9_-]{2,120}$"}},
+    "expectedBehavior": {"enum": ["answer", "clarify", "refuse", "degrade"]},
+    "mustHave": {"type": "array", "items": {"type": "string", "minLength": 1, "maxLength": 500}},
+    "mustNotHave": {"type": "array", "items": {"type": "string", "minLength": 1, "maxLength": 500}},
+    "hardGateIds": {"type": "array", "uniqueItems": true, "items": {"type": "string", "pattern": "^[a-z][a-z0-9_]*\\.[a-z][a-z0-9_]*$"}},
+    "rubricWeights": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["taskCompliance", "sourceFidelity", "structureReasoning", "styleConsistency", "directUsability"],
+      "properties": {
+        "taskCompliance": {"type": "integer", "minimum": 0, "maximum": 100},
+        "sourceFidelity": {"type": "integer", "minimum": 0, "maximum": 100},
+        "structureReasoning": {"type": "integer", "minimum": 0, "maximum": 100},
+        "styleConsistency": {"type": "integer", "minimum": 0, "maximum": 100},
+        "directUsability": {"type": "integer", "minimum": 0, "maximum": 100}
+      }
+    },
+    "capabilityTags": {"type": "array", "uniqueItems": true, "items": {"type": "string", "pattern": "^[a-z][a-z0-9_]*$"}},
+    "riskTags": {"type": "array", "uniqueItems": true, "items": {"type": "string", "pattern": "^[a-z][a-z0-9_.]*$"}},
+    "ruleProfileRefs": {"type": "array", "uniqueItems": true, "items": {"type": "string", "pattern": "^[a-z][a-z0-9.-]{2,120}$"}},
+    "privacyLevel": {"enum": ["synthetic", "anonymized", "private"]},
+    "inputHash": {"type": "string", "pattern": "^sha256:[a-f0-9]{64}$"},
+    "redactedInputHash": {"type": "string", "pattern": "^sha256:[a-f0-9]{64}$"}
+  }
+}

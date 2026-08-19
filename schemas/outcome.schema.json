@@ -1,0 +1,28 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/Echo-Smith/writing-agent-benchmark/main/schemas/outcome.schema.json",
+  "title": "WABench outcome event",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schemaVersion", "eventId", "traceRef", "runId", "caseId", "trafficType", "eventType", "occurredAt", "privacy"],
+  "properties": {
+    "schemaVersion": {"const": "wabench.v1"},
+    "eventId": {"type": "string", "pattern": "^[a-z][a-z0-9_-]{2,120}$"},
+    "traceRef": {"type": "string", "minLength": 1, "maxLength": 200},
+    "runId": {"type": "string", "pattern": "^[a-z][a-z0-9_-]{2,120}$"},
+    "caseId": {"type": "string", "pattern": "^[a-z][a-z0-9_-]{2,120}$"},
+    "trafficType": {"enum": ["user", "smoke", "replay"]},
+    "eventType": {"enum": ["copy", "download", "regenerate", "continue_edit", "explicit_accept", "explicit_reject"]},
+    "occurredAt": {"type": "string", "format": "date-time"},
+    "privacy": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["storesModifiedText", "storesClipboard"],
+      "properties": {
+        "storesModifiedText": {"const": false},
+        "storesClipboard": {"const": false}
+      }
+    },
+    "metadata": {"type": "object"}
+  }
+}

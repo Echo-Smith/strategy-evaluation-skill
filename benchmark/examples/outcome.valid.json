@@ -1,0 +1,12 @@
+{
+  "schemaVersion": "wabench.v1",
+  "eventId": "demo_event_001",
+  "traceRef": "redacted-trace-demo",
+  "runId": "demo_run_001",
+  "caseId": "writing_demo_001",
+  "trafficType": "user",
+  "eventType": "copy",
+  "occurredAt": "2026-08-19T00:01:00.000Z",
+  "privacy": {"storesModifiedText": false, "storesClipboard": false},
+  "metadata": {"surface": "result"}
+}

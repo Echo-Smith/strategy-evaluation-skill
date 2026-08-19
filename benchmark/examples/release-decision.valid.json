@@ -1,0 +1,12 @@
+{
+  "schemaVersion": "wabench.v1",
+  "decisionId": "decision_demo_001",
+  "candidateId": "demo_candidate_v1",
+  "reportRefs": ["report_demo_001"],
+  "decision": "release",
+  "evidence": ["Public synthetic demo passed all declared gates."],
+  "exceptions": [],
+  "rollback": {"enabled": true, "featureFlags": ["SOURCE_EVIDENCE_GATE_ENABLED"], "conditions": ["Rollback if a critical hard failure appears."]},
+  "owner": "benchmark-maintainer",
+  "decidedAt": "2026-08-19T00:05:00.000Z"
+}

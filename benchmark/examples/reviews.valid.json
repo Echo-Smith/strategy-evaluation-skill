@@ -1,0 +1,38 @@
+[
+  {
+    "schemaVersion": "wabench.v1",
+    "reviewId": "review_demo_001",
+    "runId": "demo_run_001",
+    "caseId": "writing_demo_001",
+    "outputHash": "sha256:7777777777777777777777777777777777777777777777777777777777777777",
+    "rubricVersion": "core-rubric.v1",
+    "reviewer": {"alias": "reviewer_a", "type": "human", "role": "editor", "mode": "independent_blind", "tagSource": "human_review"},
+    "scores": {"taskCompliance": 5, "sourceFidelity": 5, "structureReasoning": 4, "styleConsistency": 4, "directUsability": 5},
+    "acceptance": "direct_use",
+    "modificationBurden": 0,
+    "hardFailures": [],
+    "symptomTags": [],
+    "primaryRootCause": null,
+    "secondaryRootCauses": [],
+    "notes": "Synthetic public example.",
+    "reviewedAt": "2026-08-19T00:02:00.000Z"
+  },
+  {
+    "schemaVersion": "wabench.v1",
+    "reviewId": "review_demo_002",
+    "runId": "demo_run_002",
+    "caseId": "writing_demo_002",
+    "outputHash": "sha256:8888888888888888888888888888888888888888888888888888888888888888",
+    "rubricVersion": "core-rubric.v1",
+    "reviewer": {"alias": "reviewer_b", "type": "human", "role": "editor", "mode": "independent_blind", "tagSource": "human_review"},
+    "scores": {"taskCompliance": 4, "sourceFidelity": 3, "structureReasoning": 4, "styleConsistency": 4, "directUsability": 3},
+    "acceptance": "heavy_edit",
+    "modificationBurden": 2,
+    "hardFailures": ["fact.future_as_completed"],
+    "symptomTags": ["fact.future_as_completed"],
+    "primaryRootCause": "prompt",
+    "secondaryRootCauses": ["model"],
+    "notes": "Synthetic failure example.",
+    "reviewedAt": "2026-08-19T00:03:00.000Z"
+  }
+]
