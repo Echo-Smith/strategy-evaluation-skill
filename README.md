@@ -4,7 +4,7 @@ WritingAgentBench 是面向写作 Agent 的可复现评测基准。它把“模�
 
 > 公开核心用于复现和比较；企业私有集用于真实业务决策。两者使用同一协议，但绝不混用数据。
 
-[English](./README.en.md) · [方法说明](./docs/methodology.md) · [私有扩展](./docs/private-extension.md) · [Skill](./skill/writing-agent-benchmark/SKILL.md)
+[English](./README.en.md) · [公开核心集](./benchmark/public-core/DATASET_CARD.md) · [方法说明](./docs/methodology.md) · [私有扩展](./docs/private-extension.md) · [Skill](./skill/writing-agent-benchmark/SKILL.md)
 
 ## 产品经理案例：Luminbuddy 如何让评测影响上线
 
@@ -55,7 +55,7 @@ collectOutcome(traceId) -> WABench outcome[]
 ## 目录
 
 ```text
-benchmark/   Rubric、根因分类和脱敏示例
+benchmark/   72 条公开核心集、Rubric、根因分类和脱敏示例
 schemas/     WABench Schema v1
 scripts/     校验、汇总和隐私扫描 CLI
 skill/       可安装的 writing-agent-benchmark Skill
@@ -65,7 +65,7 @@ tests/       契约、评分和隐私测试
 
 ## 当前范围
 
-本版本完成协议、Rubric、根因、CLI 和 Skill。60—100 条公开核心集及 Luminbuddy V1/V2 Adapter 将在后续任务中按同一协议加入。
+本版本包含 72 条公开核心集、20 条合成来源 fixture、协议、Rubric、根因、CLI 和 Skill。Luminbuddy 私有套件只公开接口和聚合口径，原始数据不进入本仓库。
 
 ## License
 

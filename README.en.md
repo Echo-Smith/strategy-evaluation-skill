@@ -4,7 +4,7 @@ WritingAgentBench is a reproducible benchmark for writing agents. It evaluates m
 
 > The public core supports reproducibility and comparison. Private enterprise suites support real business decisions. They share one protocol without sharing private data.
 
-[中文](./README.md) · [Methodology](./docs/methodology.en.md) · [Private extensions](./docs/private-extension.md) · [Skill](./skill/writing-agent-benchmark/SKILL.md)
+[中文](./README.md) · [Public core](./benchmark/public-core/DATASET_CARD.en.md) · [Methodology](./docs/methodology.en.md) · [Private extensions](./docs/private-extension.md) · [Skill](./skill/writing-agent-benchmark/SKILL.md)
 
 ## Product case: evaluation changed Luminbuddy's defaults
 
@@ -45,7 +45,7 @@ normalize(rawTrace) -> WABench output
 collectOutcome(traceId) -> WABench outcome[]
 ```
 
-This release contains the protocol, rubric, taxonomy, CLI, and Skill. The 60–100-case public core and Luminbuddy V1/V2 Adapters follow in the next implementation phase.
+This release contains a 72-case public core, 20 synthetic source fixtures, the protocol, rubric, taxonomy, CLI, and Skill. Luminbuddy private suites expose only their interface and aggregate methodology; raw records never enter this repository.
 
 ## License
 

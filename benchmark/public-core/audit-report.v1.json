@@ -1,0 +1,46 @@
+{
+  "schemaVersion": "wabench.public-core-audit.v1",
+  "generatedAt": "2026-08-19T00:00:00.000Z",
+  "sourceInventory": {
+    "syntheticStrategyCases": 80,
+    "duplicateInputsRemoved": 8,
+    "uniqueStrategyCasesSelected": 52,
+    "legacyWritingSeedsAudited": 65,
+    "legacyWritingSeedDistribution": {
+      "yinyue": 25,
+      "shenlun": 20,
+      "xiaohongshu": 20
+    },
+    "legacyWritingSeedSourceHash": "sha256:1ea1f2d5812d6de27f90eebbe070e389e0eea21e7f1e1e028d99f2d1d30f4741",
+    "legacyWritingSeedsRewrittenAndSelected": 20
+  },
+  "publicCore": {
+    "caseCount": 72,
+    "fixtureCount": 20,
+    "taskTypeDistribution": {
+      "abnormal": 5,
+      "dedupe": 8,
+      "polish": 10,
+      "topic": 11,
+      "writing": 38
+    },
+    "difficultyDistribution": {
+      "L1": 24,
+      "L2": 26,
+      "L3": 22
+    },
+    "sourceModeDistribution": {
+      "frozen": 20,
+      "none": 52
+    },
+    "privacyDistribution": {
+      "synthetic": 72
+    }
+  },
+  "exclusions": [
+    "Exact strategy-pair duplicates",
+    "Private rule identifiers, experiment assignments, reviewer notes and product names",
+    "Time-sensitive claims, unverified statistics, first-person experience claims and health-risk prompts from legacy style seeds",
+    "All real-user traces, enterprise knowledge-base excerpts and private evaluation outputs"
+  ]
+}
