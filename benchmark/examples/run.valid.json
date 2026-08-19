@@ -1,0 +1,15 @@
+{
+  "schemaVersion": "wabench.v1",
+  "runId": "demo_run_001",
+  "suiteId": "wabench.public.demo",
+  "candidateId": "demo_candidate_v1",
+  "adapterId": "example_adapter",
+  "runnerVersion": "v1.0.0",
+  "environment": "test",
+  "trafficType": "replay",
+  "evaluationRunId": "public-demo-run-001",
+  "status": "completed",
+  "startedAt": "2026-08-19T00:00:00.000Z",
+  "completedAt": "2026-08-19T00:00:01.000Z",
+  "outputRefs": ["demo_output_001"]
+}

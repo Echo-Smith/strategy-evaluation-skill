@@ -1,0 +1,4 @@
+interface:
+  display_name: "Writing Agent Benchmark"
+  short_description: "Build and run evidence-backed writing-agent evaluations"
+  default_prompt: "Use $writing-agent-benchmark to design, validate, run, review, and report a reproducible writing-agent benchmark."

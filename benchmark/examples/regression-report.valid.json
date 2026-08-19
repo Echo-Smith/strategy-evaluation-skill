@@ -1,0 +1,13 @@
+{
+  "schemaVersion": "wabench.v1",
+  "reportId": "report_demo_001",
+  "suiteId": "wabench.public.demo",
+  "baselineRunId": "demo_run_000",
+  "candidateRunId": "demo_run_001",
+  "rubricVersion": "core-rubric.v1",
+  "metrics": {"passRate": 1, "hardFailureRate": 0},
+  "deltas": {"passRate": 0.25, "hardFailureRate": -0.1},
+  "badcases": [],
+  "gateStatus": "passed",
+  "generatedAt": "2026-08-19T00:04:00.000Z"
+}

@@ -1,0 +1,18 @@
+{
+  "schemaVersion": "wabench.v1",
+  "outputId": "demo_output_001",
+  "runId": "demo_run_001",
+  "caseId": "writing_demo_001",
+  "status": "complete",
+  "outputHash": "sha256:7777777777777777777777777777777777777777777777777777777777777777",
+  "textStorage": {"mode": "inline_public", "text": "社区计划于周六上午举行旧物交换活动，报名方式将在活动前一天公布。"},
+  "checks": [
+    {"checkId": "source.future_state_preserved", "status": "pass", "severity": "critical", "evidence": {"matched": true}},
+    {"checkId": "format.length_compliance", "status": "pass", "severity": "medium", "evidence": {"characters": 35, "maximum": 120}}
+  ],
+  "failures": [],
+  "metrics": {"latencyMs": 1000, "inputTokens": null, "outputTokens": null, "toolFailureCount": 0, "costStatus": "unavailable", "cost": null, "currency": null},
+  "routing": {"knowledgeProvider": "fixture", "knowledgeOnly": true, "webSearchTriggered": false},
+  "traceRef": null,
+  "createdAt": "2026-08-19T00:00:01.000Z"
+}

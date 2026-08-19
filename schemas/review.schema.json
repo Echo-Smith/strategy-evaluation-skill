@@ -1,0 +1,48 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/Echo-Smith/writing-agent-benchmark/main/schemas/review.schema.json",
+  "title": "WABench review",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schemaVersion", "reviewId", "runId", "caseId", "outputHash", "rubricVersion", "reviewer", "scores", "acceptance", "modificationBurden", "hardFailures", "symptomTags", "primaryRootCause", "secondaryRootCauses", "reviewedAt"],
+  "properties": {
+    "schemaVersion": {"const": "wabench.v1"},
+    "reviewId": {"type": "string", "pattern": "^[a-z][a-z0-9_-]{2,120}$"},
+    "runId": {"type": "string", "pattern": "^[a-z][a-z0-9_-]{2,120}$"},
+    "caseId": {"type": "string", "pattern": "^[a-z][a-z0-9_-]{2,120}$"},
+    "outputHash": {"type": "string", "pattern": "^sha256:[a-f0-9]{64}$"},
+    "rubricVersion": {"type": "string", "pattern": "^core-rubric\\.v[0-9]+$"},
+    "reviewer": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["alias", "type", "role", "mode", "tagSource"],
+      "properties": {
+        "alias": {"type": "string", "pattern": "^[a-z][a-z0-9_-]{1,40}$"},
+        "type": {"enum": ["human", "model", "rule"]},
+        "role": {"type": "string", "maxLength": 80},
+        "mode": {"enum": ["independent_blind", "calibrated_recheck", "arbitration", "mechanical_precheck"]},
+        "tagSource": {"enum": ["human_review", "model_precheck", "rule_check", "arbitration", "imported"]}
+      }
+    },
+    "scores": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["taskCompliance", "sourceFidelity", "structureReasoning", "styleConsistency", "directUsability"],
+      "properties": {
+        "taskCompliance": {"type": "number", "minimum": 1, "maximum": 5},
+        "sourceFidelity": {"type": "number", "minimum": 1, "maximum": 5},
+        "structureReasoning": {"type": "number", "minimum": 1, "maximum": 5},
+        "styleConsistency": {"type": "number", "minimum": 1, "maximum": 5},
+        "directUsability": {"type": "number", "minimum": 1, "maximum": 5}
+      }
+    },
+    "acceptance": {"enum": ["direct_use", "light_edit", "heavy_edit", "reject", "unknown"]},
+    "modificationBurden": {"type": ["integer", "null"], "minimum": 0, "maximum": 3},
+    "hardFailures": {"type": "array", "uniqueItems": true, "items": {"type": "string", "pattern": "^[a-z][a-z0-9_]*\\.[a-z][a-z0-9_]*$"}},
+    "symptomTags": {"type": "array", "uniqueItems": true, "items": {"type": "string", "pattern": "^[a-z][a-z0-9_]*\\.[a-z][a-z0-9_]*$"}},
+    "primaryRootCause": {"enum": ["input", "retrieval", "prompt", "memory", "tool", "model", "interaction", null]},
+    "secondaryRootCauses": {"type": "array", "uniqueItems": true, "items": {"enum": ["input", "retrieval", "prompt", "memory", "tool", "model", "interaction"]}},
+    "notes": {"type": "string", "maxLength": 2000},
+    "reviewedAt": {"type": "string", "format": "date-time"}
+  }
+}

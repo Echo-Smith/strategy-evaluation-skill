@@ -1,0 +1,39 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/Echo-Smith/writing-agent-benchmark/main/schemas/candidate-manifest.schema.json",
+  "title": "WABench candidate manifest",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schemaVersion", "candidateId", "version", "promptHash", "memory", "model", "codeHash", "toolConfigHash", "runnerHash", "featureFlags", "frozenAt"],
+  "properties": {
+    "schemaVersion": {"const": "wabench.v1"},
+    "candidateId": {"type": "string", "pattern": "^[a-z][a-z0-9_.-]{2,120}$"},
+    "version": {"type": "string", "pattern": "^v[0-9]+(?:\\.[0-9]+){0,2}$"},
+    "promptHash": {"type": "string", "pattern": "^sha256:[a-f0-9]{64}$"},
+    "memory": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["enabled", "optIn", "configHash"],
+      "properties": {
+        "enabled": {"type": "boolean"},
+        "optIn": {"type": "boolean"},
+        "configHash": {"type": "string", "pattern": "^sha256:[a-f0-9]{64}$"}
+      }
+    },
+    "model": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["provider", "modelId", "configHash"],
+      "properties": {
+        "provider": {"type": "string", "minLength": 1, "maxLength": 80},
+        "modelId": {"type": "string", "minLength": 1, "maxLength": 160},
+        "configHash": {"type": "string", "pattern": "^sha256:[a-f0-9]{64}$"}
+      }
+    },
+    "codeHash": {"type": "string", "pattern": "^(?:git:)?[a-f0-9]{7,64}$"},
+    "toolConfigHash": {"type": "string", "pattern": "^sha256:[a-f0-9]{64}$"},
+    "runnerHash": {"type": "string", "pattern": "^sha256:[a-f0-9]{64}$"},
+    "featureFlags": {"type": "object"},
+    "frozenAt": {"type": "string", "format": "date-time"}
+  }
+}

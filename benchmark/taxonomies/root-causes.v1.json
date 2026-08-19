@@ -1,0 +1,61 @@
+{
+  "version": "root-causes.v1",
+  "scope": "universal",
+  "classificationRule": "先记录可观察症状，再根据输入、配置、Trace 和工具证据判断主根因与次要诱因；不能仅凭输出不好就归为模型。",
+  "rootCauses": [
+    {
+      "id": "input",
+      "name": "输入 / Input",
+      "definition": "用户输入或上游上下文本身缺失、冲突、模糊、损坏或超出当前处理边界。",
+      "include": ["关键主体或目标缺失", "OCR 严重错乱", "多份用户材料互相冲突"],
+      "exclude": ["信息完整但系统未发起必要澄清"]
+    },
+    {
+      "id": "retrieval",
+      "name": "检索 / Retrieval",
+      "definition": "查询规划、召回、排序、过滤或来源选择未提供所需且可信的材料。",
+      "include": ["空召回", "召回对象错误", "旧来源压过最新来源"],
+      "exclude": ["已返回正确材料但 Prompt 未要求使用"]
+    },
+    {
+      "id": "prompt",
+      "name": "Prompt",
+      "definition": "系统指令、任务模板、上下文组装或规则优先级没有清楚表达正确行为。",
+      "include": ["遗漏明确篇幅", "来源冲突规则未进入上下文"],
+      "exclude": ["指令清晰完整但模型仍违反"]
+    },
+    {
+      "id": "memory",
+      "name": "Memory",
+      "definition": "长期或会话记忆的写入、选择、更新、过期、隔离或注入不当。",
+      "include": ["一次性要求误存为长期偏好", "跨用户注入无关记忆"],
+      "exclude": ["记忆未参与且当前输入本身错误"]
+    },
+    {
+      "id": "tool",
+      "name": "工具 / Tool",
+      "definition": "外部服务、模型接口、知识库、OCR、查重或基础设施失败、超时或返回异常结构。",
+      "include": ["鉴权失败", "工具超时", "响应结构变化"],
+      "exclude": ["工具正常但 Query 选择错误"]
+    },
+    {
+      "id": "model",
+      "name": "模型 / Model",
+      "definition": "输入、材料、Prompt、Memory 和工具均正确完整时，模型仍产生不可归因于其他环节的错误。",
+      "include": ["明确禁止补写仍编造结果", "无法由指令冲突解释的严重逻辑错误"],
+      "exclude": ["尚未检查 Prompt 或 Trace"]
+    },
+    {
+      "id": "interaction",
+      "name": "交互 / Interaction",
+      "definition": "产品没有让用户理解状态、补充信息、纠正记忆、查看来源或表达接受与修改结果。",
+      "include": ["材料不足仍直接生成", "无法确认最终采用版本"],
+      "exclude": ["交互已展示来源但底层召回错误"]
+    }
+  ],
+  "decisionRules": [
+    {"id": "prompt_before_model", "rule": "先检查正确行为是否完整进入 Prompt；缺失记 Prompt，完整仍违反才记模型。"},
+    {"id": "interaction_is_flow_failure", "rule": "交互只用于产品流程缺少澄清、确认、拒绝或降级机会。"},
+    {"id": "no_badcase_allowed", "rule": "输出通过且只有可接受取舍时，主根因可以为空。"}
+  ]
+}

@@ -1,0 +1,13 @@
+{
+  "schemaVersion": "wabench.v1",
+  "candidateId": "demo_candidate_v1",
+  "version": "v1.0.0",
+  "promptHash": "sha256:2222222222222222222222222222222222222222222222222222222222222222",
+  "memory": {"enabled": false, "optIn": false, "configHash": "sha256:3333333333333333333333333333333333333333333333333333333333333333"},
+  "model": {"provider": "example", "modelId": "example-writing-model", "configHash": "sha256:4444444444444444444444444444444444444444444444444444444444444444"},
+  "codeHash": "git:abcdef1234567890",
+  "toolConfigHash": "sha256:5555555555555555555555555555555555555555555555555555555555555555",
+  "runnerHash": "sha256:6666666666666666666666666666666666666666666666666666666666666666",
+  "featureFlags": {"sourceEvidenceGate": true},
+  "frozenAt": "2026-08-19T00:00:00.000Z"
+}

@@ -1,0 +1,20 @@
+{
+  "schemaVersion": "wabench.v1",
+  "caseId": "writing_demo_001",
+  "suiteId": "wabench.public.demo",
+  "taskType": "writing",
+  "difficulty": "L1",
+  "input": "根据公开材料写一段不超过 120 字的活动预告，不得把计划写成已经完成。",
+  "context": {"language": "zh-CN", "maxCharacters": 120},
+  "sourceMode": "frozen",
+  "sourceFixtureRefs": ["public_fixture_001"],
+  "expectedBehavior": "answer",
+  "mustHave": ["保持未来时态"],
+  "mustNotHave": ["虚构结果或参与人数"],
+  "hardGateIds": ["fact.future_as_completed"],
+  "rubricWeights": {"taskCompliance": 25, "sourceFidelity": 25, "structureReasoning": 15, "styleConsistency": 15, "directUsability": 20},
+  "capabilityTags": ["source_grounding", "constraint_following"],
+  "riskTags": ["fact.future_as_completed"],
+  "ruleProfileRefs": [],
+  "privacyLevel": "synthetic"
+}

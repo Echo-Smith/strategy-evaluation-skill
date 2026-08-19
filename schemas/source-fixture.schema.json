@@ -1,0 +1,21 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/Echo-Smith/writing-agent-benchmark/main/schemas/source-fixture.schema.json",
+  "title": "WABench source fixture",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schemaVersion", "fixtureId", "sourceType", "title", "retrievedAt", "contentHash", "privacyLevel", "excerpt"],
+  "properties": {
+    "schemaVersion": {"const": "wabench.v1"},
+    "fixtureId": {"type": "string", "pattern": "^[a-z][a-z0-9_-]{2,120}$"},
+    "sourceType": {"enum": ["public_document", "simulated_knowledge_base", "enterprise_knowledge_base", "user_material", "live_web"]},
+    "provider": {"type": "string", "maxLength": 80},
+    "sourceRef": {"type": "string", "maxLength": 500},
+    "title": {"type": "string", "minLength": 1, "maxLength": 300},
+    "retrievedAt": {"type": "string", "format": "date-time"},
+    "contentHash": {"type": "string", "pattern": "^sha256:[a-f0-9]{64}$"},
+    "privacyLevel": {"enum": ["public", "redacted", "private"]},
+    "excerpt": {"type": "string", "maxLength": 2000},
+    "metadata": {"type": "object"}
+  }
+}

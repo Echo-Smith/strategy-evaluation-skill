@@ -1,0 +1,21 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/Echo-Smith/writing-agent-benchmark/main/schemas/regression-report.schema.json",
+  "title": "WABench regression report",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schemaVersion", "reportId", "suiteId", "baselineRunId", "candidateRunId", "rubricVersion", "metrics", "deltas", "badcases", "gateStatus", "generatedAt"],
+  "properties": {
+    "schemaVersion": {"const": "wabench.v1"},
+    "reportId": {"type": "string", "pattern": "^[a-z][a-z0-9_-]{2,120}$"},
+    "suiteId": {"type": "string", "pattern": "^[a-z][a-z0-9.-]{2,120}$"},
+    "baselineRunId": {"type": "string", "pattern": "^[a-z][a-z0-9_-]{2,120}$"},
+    "candidateRunId": {"type": "string", "pattern": "^[a-z][a-z0-9_-]{2,120}$"},
+    "rubricVersion": {"type": "string", "pattern": "^core-rubric\\.v[0-9]+$"},
+    "metrics": {"type": "object"},
+    "deltas": {"type": "object"},
+    "badcases": {"type": "array", "items": {"type": "object"}},
+    "gateStatus": {"enum": ["passed", "blocked", "inconclusive", "human_review_required"]},
+    "generatedAt": {"type": "string", "format": "date-time"}
+  }
+}

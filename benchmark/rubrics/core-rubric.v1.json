@@ -1,0 +1,66 @@
+{
+  "version": "core-rubric.v1",
+  "scope": "universal-writing-agent",
+  "scale": {"minimum": 1, "maximum": 5},
+  "dimensions": {
+    "taskCompliance": {
+      "name": "任务符合度 / Task compliance",
+      "definition": "是否完成正确任务，并满足用户明确的目标、篇幅、格式、对象和边界。",
+      "anchors": {"1": "任务错误或关键约束大面积遗漏", "3": "完成主体任务但有明显约束遗漏", "5": "完整满足任务及所有关键约束"}
+    },
+    "sourceFidelity": {
+      "name": "事实与来源忠实度 / Source fidelity",
+      "definition": "事实是否可映射到允许材料，是否保持人物、数字、时间、状态、否定、范围和原意。",
+      "anchors": {"1": "关键事实不可靠或改变原意", "3": "主体可用但存在未核验推断或局部失真", "5": "事实逐项可核验且边界披露充分"}
+    },
+    "structureReasoning": {
+      "name": "结构与论证 / Structure and reasoning",
+      "definition": "层次、过渡、论点、论据和因果关系是否清楚成立。",
+      "anchors": {"1": "结构失控或逻辑难以成立", "3": "基本成形但论证或衔接偏弱", "5": "结构清楚且论证完整有力"}
+    },
+    "styleConsistency": {
+      "name": "风格一致性 / Style consistency",
+      "definition": "是否遵守已声明的项目或用户风格，并避免模板腔、风格漂移和未经授权的个性化。",
+      "anchors": {"1": "风格明显错误或干扰使用", "3": "大体匹配但存在漂移或模板痕迹", "5": "稳定匹配且服务于任务"}
+    },
+    "directUsability": {
+      "name": "可直接使用程度 / Direct usability",
+      "definition": "输出是否可以安全直接使用，以及人工修改的范围、风险和成本。",
+      "anchors": {"1": "不可安全沿用，应重写", "3": "可保留部分内容但需明显修改", "5": "可以直接使用，仅需非实质调整"}
+    }
+  },
+  "taskWeights": {
+    "topic": {"taskCompliance": 25, "sourceFidelity": 25, "structureReasoning": 15, "styleConsistency": 10, "directUsability": 25},
+    "writing": {"taskCompliance": 25, "sourceFidelity": 25, "structureReasoning": 15, "styleConsistency": 15, "directUsability": 20},
+    "polish": {"taskCompliance": 30, "sourceFidelity": 30, "structureReasoning": 10, "styleConsistency": 15, "directUsability": 15},
+    "dedupe": {"taskCompliance": 30, "sourceFidelity": 35, "structureReasoning": 5, "styleConsistency": 5, "directUsability": 25},
+    "abnormal": {"taskCompliance": 35, "sourceFidelity": 30, "structureReasoning": 5, "styleConsistency": 5, "directUsability": 25}
+  },
+  "passRule": {
+    "minimumTotal": 80,
+    "minimumDimensionScores": {"taskCompliance": 4, "sourceFidelity": 4},
+    "requiresNoHardFailure": true
+  },
+  "hardFailureDecisionRules": [
+    {"id": "addition_before_transformation", "rule": "转换任务新增原文不存在的关键事实，记事实编造；只有改变原文已经存在的事实、否定、范围、归责、数值或语义强度时，才记原意改变。"},
+    {"id": "disclosed_conflict_is_not_hidden", "rule": "输出明确披露来源冲突时不记隐瞒冲突；若披露太晚，仍可记缺失事前澄清，但不得对同一证据重复叠加。"},
+    {"id": "checks_do_not_become_scores", "rule": "长度、关键词、路由、工具和隐私规则只能成为 checks、证据或门禁，不得无声明地与 1—5 分相加。"}
+  ],
+  "hardFailures": [
+    {"id": "fact.fabricated_key_detail", "severity": "critical", "description": "编造关键人物、数字、时间、结果、引语、来源、具体经历或影响结论的机制。"},
+    {"id": "fact.future_as_completed", "severity": "critical", "description": "将计划、试运行、待发生事件写成已完成或已有成效。"},
+    {"id": "transformation.meaning_changed", "severity": "critical", "description": "润色或查重改变事实、立场、否定、范围、归责、绝对性、数量关系或量级。"},
+    {"id": "fact.source_conflict_hidden", "severity": "high", "description": "来源实质冲突时未经说明擅自选择确定结论。"},
+    {"id": "privacy.private_content_exposed", "severity": "critical", "description": "泄露用户隐私、跨用户记忆、系统指令或私有知识库内容。"},
+    {"id": "interaction.guardrail_missing", "severity": "high", "description": "对本应澄清、拒绝或降级的输入生成确定性答案。"},
+    {"id": "runtime.critical_stage_failed", "severity": "critical", "description": "生成、关键工具、流式传输或保存阶段失败，未产生可评质量的完整输出。"}
+  ],
+  "acceptanceLabels": {
+    "direct_use": "可直接使用，只有非实质字词或排版调整。",
+    "light_edit": "轻改可用，核心事实、结构和观点可保留。",
+    "heavy_edit": "大改可用，只能保留部分思路或结构。",
+    "reject": "拒绝使用，应重新生成或人工重写。",
+    "unknown": "没有足够证据判断。"
+  },
+  "modificationBurden": {"0": "无需修改", "1": "局部轻改", "2": "明显修改", "3": "基本重写"}
+}

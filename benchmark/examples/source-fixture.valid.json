@@ -1,0 +1,13 @@
+{
+  "schemaVersion": "wabench.v1",
+  "fixtureId": "public_fixture_001",
+  "sourceType": "public_document",
+  "provider": "fixture",
+  "sourceRef": "public-demo-001",
+  "title": "Synthetic public event notice",
+  "retrievedAt": "2026-08-19T00:00:00.000Z",
+  "contentHash": "sha256:1111111111111111111111111111111111111111111111111111111111111111",
+  "privacyLevel": "public",
+  "excerpt": "社区计划于周六上午举行旧物交换活动，报名方式将在活动前一天公布。",
+  "metadata": {"synthetic": true}
+}

@@ -1,0 +1,17 @@
+{
+  "schemaVersion": "wabench.v1",
+  "suiteId": "wabench.public.demo",
+  "version": "v1.0.0",
+  "name": "Public demo suite",
+  "description": "Synthetic examples for contract validation.",
+  "partition": "development",
+  "visibility": "public",
+  "caseRefs": ["writing_demo_001"],
+  "coverage": {
+    "taskTypes": ["writing"],
+    "capabilities": ["source_grounding"],
+    "riskTags": ["fact.unsupported_detail"]
+  },
+  "privacy": {"allowsRawText": true, "publicationPolicy": "full"},
+  "createdAt": "2026-08-19T00:00:00.000Z"
+}
